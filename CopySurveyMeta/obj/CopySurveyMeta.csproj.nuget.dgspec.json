@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DotNet_Work\\CopySurveyMeta\\CopySurveyMeta\\CopySurveyMeta.csproj": {}
+    "D:\\DotNet_Work\\clonesurvey\\CopySurveyMeta\\CopySurveyMeta.csproj": {}
   },
   "projects": {
-    "D:\\DotNet_Work\\CopySurveyMeta\\CopySurveyMeta\\CopySurveyMeta.csproj": {
+    "D:\\DotNet_Work\\clonesurvey\\CopySurveyMeta\\CopySurveyMeta.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DotNet_Work\\CopySurveyMeta\\CopySurveyMeta\\CopySurveyMeta.csproj",
+        "projectUniqueName": "D:\\DotNet_Work\\clonesurvey\\CopySurveyMeta\\CopySurveyMeta.csproj",
         "projectName": "CopySurveyMeta",
-        "projectPath": "D:\\DotNet_Work\\CopySurveyMeta\\CopySurveyMeta\\CopySurveyMeta.csproj",
+        "projectPath": "D:\\DotNet_Work\\clonesurvey\\CopySurveyMeta\\CopySurveyMeta.csproj",
         "packagesPath": "C:\\Users\\cnx18\\.nuget\\packages\\",
-        "outputPath": "D:\\DotNet_Work\\CopySurveyMeta\\CopySurveyMeta\\obj\\",
+        "outputPath": "D:\\DotNet_Work\\clonesurvey\\CopySurveyMeta\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

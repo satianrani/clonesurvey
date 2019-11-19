@@ -1,5 +1,5 @@
 /bin
 /obj
 /connection_backup
-/db.lock
+/.vs
 

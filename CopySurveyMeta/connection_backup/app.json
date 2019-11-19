@@ -1,8 +1,8 @@
 ﻿{
   "Application": {
     "Name": "Clone",
-    "ConnectionStringDestination": "Data Source=DESKTOP-KNPULFO;Database=Survey;Trusted_Connection=True;MultipleActiveResultSets=true",
-    "ConnectionStringSource": "Server=tcp:ktbdigitalrtf-uat.southeastasia.cloudapp.azure.com,1433;Initial Catalog=Survey;Persist Security Info=False;User ID=ktbsa;Password=L85cE9nMZ;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=30;"
+    "ConnectionStringDestination": "",
+    "ConnectionStringSource": ""
   },
   
 }

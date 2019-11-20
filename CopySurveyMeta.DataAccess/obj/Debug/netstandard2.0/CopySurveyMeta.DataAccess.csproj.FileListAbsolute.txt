@@ -1,0 +1,7 @@
+D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\bin\Debug\netstandard2.0\CopySurveyMeta.DataAccess.deps.json
+D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\bin\Debug\netstandard2.0\CopySurveyMeta.DataAccess.dll
+D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\bin\Debug\netstandard2.0\CopySurveyMeta.DataAccess.pdb
+D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\obj\Debug\netstandard2.0\CopySurveyMeta.DataAccess.AssemblyInfoInputs.cache
+D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\obj\Debug\netstandard2.0\CopySurveyMeta.DataAccess.AssemblyInfo.cs
+D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\obj\Debug\netstandard2.0\CopySurveyMeta.DataAccess.dll
+D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\obj\Debug\netstandard2.0\CopySurveyMeta.DataAccess.pdb

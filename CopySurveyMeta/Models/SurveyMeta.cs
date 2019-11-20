@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace CopySurveyMeta.Models
 {
+    [Table("SurveyMeta")]
     public class SurveyMeta
     {
+        [Key]
         public long ID { get; set; }
 
         public long SurveyID { get; set; }

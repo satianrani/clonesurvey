@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.0": {
       "CopySurveyMeta/1.0.0": {
         "dependencies": {
+          "CopySurveyMeta.DataAccess": "1.0.0",
           "Dapper": "2.0.30",
           "Microsoft.Extensions.Configuration": "3.0.0",
           "Microsoft.Extensions.Configuration.Binder": "3.0.0",
@@ -230,7 +231,16 @@
           "System.Security.Principal.Windows": "4.6.0"
         }
       },
-      "System.Security.Principal.Windows/4.6.0": {}
+      "System.Security.Principal.Windows/4.6.0": {},
+      "CopySurveyMeta.DataAccess/1.0.0": {
+        "dependencies": {
+          "Dapper": "2.0.30",
+          "System.Data.SqlClient": "4.7.0"
+        },
+        "runtime": {
+          "CopySurveyMeta.DataAccess.dll": {}
+        }
+      }
     }
   },
   "libraries": {
@@ -399,6 +409,11 @@
       "sha512": "sha512-Mdukseovp0YIGaz16FMH6nbfgZkrCFOJbtXQptv0aeBO9h775Ilb9+TDwLVTKikoW7y7CY7lpoXl9zmZ5G3ndA==",
       "path": "system.security.principal.windows/4.6.0",
       "hashPath": "system.security.principal.windows.4.6.0.nupkg.sha512"
+    },
+    "CopySurveyMeta.DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

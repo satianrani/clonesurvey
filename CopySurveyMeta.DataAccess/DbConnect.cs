@@ -2,8 +2,9 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace CopySurveyMeta
+namespace CopySurveyMeta.DataAccess
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "<Pending>")]
     public class DbConnect : IDisposable
     {
         private IDbConnection _connection;

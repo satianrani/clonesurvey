@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 
@@ -30,12 +31,12 @@ namespace CopySurveyMeta
             get
             {
                 if (appConfig == null)
-                {
+                { 
                     //     var builder = new ConfigurationBuilder()
                     //.SetBasePath(Directory.GetCurrentDirectory())
                     //.AddJsonFile("appsettings.json");
                     IConfiguration config = new ConfigurationBuilder()
-                      .AddJsonFile(@"appsettings.json", true, true)
+                      .AddJsonFile("appsettings.json", true, true)
                       .Build();
 
                     appConfig = config.GetSection("application").Get<Application>();

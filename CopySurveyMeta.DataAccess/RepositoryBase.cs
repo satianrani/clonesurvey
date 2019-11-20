@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 
-namespace CopySurveyMeta
+namespace CopySurveyMeta.DataAccess
 {
     public class RepositoryBase<T>
     {
@@ -59,7 +59,8 @@ namespace CopySurveyMeta
         public virtual void Delete(object entity, string where = null)
         {
             var query = $"delete from [{prefix}].[{typeof(T).Name}] ";
-            if (where != null) {
+            if (where != null)
+            {
                 query += query + where;
             }
             if (_transaction != null)
@@ -71,6 +72,7 @@ namespace CopySurveyMeta
                 _connect.Execute(query, entity);
             }
         }
+
         public virtual void Update(T entity)
         {
             var columns = GetColumns();
@@ -94,13 +96,14 @@ namespace CopySurveyMeta
                 query += where;
             if (_transaction != null)
             {
-                return _connect.Query<T>(query.Trim(),new { }, _transaction);
+                return _connect.Query<T>(query.Trim(), new { }, _transaction);
             }
             else
             {
                 return _connect.Query<T>(query.Trim(), new { });
             }
         }
+
         public virtual IEnumerable<T> Query(object entity, string where = null)
         {
             var query = $"select * from [{prefix}].[{typeof(T).Name}] ";
@@ -116,8 +119,9 @@ namespace CopySurveyMeta
                 return _connect.Query<T>(query.Trim(), entity);
             }
         }
+
         public virtual T QueryFirst(object entity, string where = null)
-        { 
+        {
             var query = $"select * from [{prefix}].[{typeof(T).Name}] ";
 
             if (!string.IsNullOrWhiteSpace(where))
@@ -139,6 +143,7 @@ namespace CopySurveyMeta
                     .Where(e => e.Name != "Id" && !e.PropertyType.GetTypeInfo().IsGenericType)
                     .Select(e => e.Name);
         }
+
         private IEnumerable<string> GetColumnsObject(Type entity)
         {
             return entity

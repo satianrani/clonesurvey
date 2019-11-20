@@ -1,4 +1,5 @@
-﻿using CopySurveyMeta.Model;
+﻿using CopySurveyMeta.DataAccess;
+using CopySurveyMeta.Model;
 using CopySurveyMeta.Models;
 using System;
 using System.Data;
@@ -11,8 +12,9 @@ namespace CopySurveyMeta
         private static void Main(string[] args)
         {
             string publishedName = "q3xh0";
-            //InsertData(publishedName);
-            DeleteData(publishedName, ApplicationInit.GetAppConfig.ConnectionStringDestination, false);
+            DeleteData(publishedName, ApplicationInit.GetAppConfig.ConnectionStringDestination, true);
+            InsertData(publishedName);
+            
         }
 
         private static void DeleteData(string PublishedKey, string sqlConfig, bool hasDeleteSurvey = false)
@@ -46,6 +48,7 @@ namespace CopySurveyMeta
                 new RepositoryBase<SurveyMetaElement>(dbConnection, dbTransaction).Delete(new { SurveyMetaID = surveyMetaIDs }, $"where SurveyMetaID in @SurveyMetaID");
                 //delete SurveyPublished
                 new RepositoryBase<SurveyPublished>(dbConnection, dbTransaction).Delete(new { PublishedKey = PublishedKey }, $"where PublishedKey = @PublishedKey");
+                new RepositoryBase<SurveyMeta>(dbConnection, dbTransaction).Delete(new { ID = surveyMetaIDs }, $"where ID in @ID");
                 if (hasDeleteSurvey)
                 {
                     //delete survey
@@ -76,12 +79,12 @@ namespace CopySurveyMeta
 
             try
             {
-                var sourceSurveyPublished = new RepositoryBase<SurveyPublished>(source).QueryFirst(new SurveyPublished { PublishedKey = PublishedKey }, $"where PublishedKey = @PublishedKey");
+                SurveyPublished sourceSurveyPublished = new RepositoryBase<SurveyPublished>(source).QueryFirst(new SurveyPublished { PublishedKey = PublishedKey }, $"where PublishedKey = @PublishedKey");
                 if (sourceSurveyPublished == null)
                 {
                     throw new Exception("Source SurveyPublished Table not found");
                 }
-                var sourceSurvey = new RepositoryBase<Survey>(source).QueryFirst(new Survey { ID = sourceSurveyPublished.SurveyID }, $"where ID = @ID");
+                Survey sourceSurvey = new RepositoryBase<Survey>(source).QueryFirst(new Survey { ID = sourceSurveyPublished.SurveyID }, $"where ID = @ID");
                 if (sourceSurvey == null)
                 {
                     throw new Exception("Source Survey Table  not found");
@@ -92,7 +95,7 @@ namespace CopySurveyMeta
                     throw new Exception("Source SurveyMeta Table  not found");
                 }
 
-                var sourceSurveyMetaContent = new RepositoryBase<SurveyMetaContent>(source).QueryFirst(new SurveyMetaContent { SurveyMetaID = sourceSurveyPublished.SurveyMetaID }, $"where SurveyMetaID = @SurveyMetaID");
+                SurveyMetaContent sourceSurveyMetaContent = new RepositoryBase<SurveyMetaContent>(source).QueryFirst(new SurveyMetaContent { SurveyMetaID = sourceSurveyPublished.SurveyMetaID }, $"where SurveyMetaID = @SurveyMetaID");
                 var sourceSurveyMetaElement = new RepositoryBase<SurveyMetaElement>(source).Query($"where SurveyMetaID = {sourceSurveyPublished.SurveyMetaID} order by [Index]");
 
                 var sourceSurveyMetaLanguage = new RepositoryBase<SurveyMetaLanguage>(source).Query($"where SurveyMetaID = {sourceSurveyPublished.SurveyMetaID}");

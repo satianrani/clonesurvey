@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopySurveyMeta", "CopySurveyMeta\CopySurveyMeta.csproj", "{7740B910-D091-4AB8-94C8-7EB3CEC69D82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopySurveyMeta", "CopySurveyMeta\CopySurveyMeta.csproj", "{7740B910-D091-4AB8-94C8-7EB3CEC69D82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopySurveyMeta.DataAccess", "CopySurveyMeta.DataAccess\CopySurveyMeta.DataAccess.csproj", "{0AC88488-AC10-4BEF-8103-B2FD363D816F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7740B910-D091-4AB8-94C8-7EB3CEC69D82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7740B910-D091-4AB8-94C8-7EB3CEC69D82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7740B910-D091-4AB8-94C8-7EB3CEC69D82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC88488-AC10-4BEF-8103-B2FD363D816F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC88488-AC10-4BEF-8103-B2FD363D816F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC88488-AC10-4BEF-8103-B2FD363D816F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC88488-AC10-4BEF-8103-B2FD363D816F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CopySurveyMeta.Models
 {
@@ -71,6 +69,5 @@ namespace CopySurveyMeta.Models
         public int? RequiredMinimumAnswer { get; set; }
 
         public string VerifyOtherRegularExpression { get; set; }
-
     }
 }

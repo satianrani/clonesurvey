@@ -5,3 +5,4 @@ D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\obj\Debug\netstandard2.0\Co
 D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\obj\Debug\netstandard2.0\CopySurveyMeta.DataAccess.AssemblyInfo.cs
 D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\obj\Debug\netstandard2.0\CopySurveyMeta.DataAccess.dll
 D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\obj\Debug\netstandard2.0\CopySurveyMeta.DataAccess.pdb
+D:\DotNet_Work\clonesurvey\CopySurveyMeta.DataAccess\obj\Debug\netstandard2.0\CopySurveyMeta.DataAccess.csprojAssemblyReference.cache

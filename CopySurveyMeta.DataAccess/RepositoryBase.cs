@@ -27,9 +27,7 @@ namespace CopySurveyMeta.DataAccess
         public virtual T Insert(T entity)
         {
             var columns = GetColumns();
-            var stringOfColumns = string.Join(", ", columns.Where(x => x.ToUpper() != "ID").Select(x => $"[{x}]"));
-            var stringOfParameters = string.Join(", ", columns.Where(x => x.ToUpper() != "ID").Select(e => "@" + e));
-            var query = $"insert into [{prefix}].[{typeof(T).Name}] ({stringOfColumns}) values ({stringOfParameters}); select * from [{prefix}].[{typeof(T).Name}]  where ID = (SELECT CAST(SCOPE_IDENTITY() AS BIGINT))";
+            var query = $"insert into {GetTableName()} ({StringBucketSysbolInColumns(columns)}) values ({StringAssignSysbolInColumns(columns)}); select * from {GetTableName()}  where {GetPrimaryKey()} = (SELECT CAST(SCOPE_IDENTITY() AS BIGINT))";
             if (_transaction != null)
             {
                 return _connect.Query<T>(query, entity, _transaction).Single();
@@ -43,9 +41,7 @@ namespace CopySurveyMeta.DataAccess
         public virtual void InsertALL(IEnumerable<T> entity)
         {
             var columns = GetColumns();
-            var stringOfColumns = string.Join(", ", columns.Where(x => x.ToUpper() != "ID").Select(x => $"[{x}]"));
-            var stringOfParameters = string.Join(", ", columns.Where(x => x.ToUpper() != "ID").Select(e => "@" + e));
-            var query = $"insert into [{prefix}].[{typeof(T).Name}] ({stringOfColumns}) values ({stringOfParameters})";
+            var query = $"insert into {GetTableName()} ({StringBucketSysbolInColumns(columns)}) values ({StringAssignSysbolInColumns(columns)})";
             if (_transaction != null)
             {
                 _connect.Execute(query, entity, _transaction);
@@ -58,7 +54,7 @@ namespace CopySurveyMeta.DataAccess
 
         public virtual void Delete(object entity, string where = null)
         {
-            var query = $"delete from [{prefix}].[{typeof(T).Name}] ";
+            var query = $"delete from {GetTableName()} ";
             if (where != null)
             {
                 query += query + where;
@@ -76,8 +72,7 @@ namespace CopySurveyMeta.DataAccess
         public virtual void Update(T entity)
         {
             var columns = GetColumns();
-            var stringOfColumns = string.Join(", ", columns.Select(e => $"{e} = @{e}"));
-            var query = $"update [{prefix}].[{typeof(T).Name}] set {stringOfColumns} where Id = @Id";
+            var query = $"update {GetTableName()} set {StringBucketSysbolInColumns(columns)} where Id = @Id";
             if (_transaction != null)
             {
                 _connect.Execute(query, entity, _transaction);
@@ -90,7 +85,7 @@ namespace CopySurveyMeta.DataAccess
 
         public virtual IEnumerable<T> Query(string where = null)
         {
-            var query = $"select * from [{prefix}].[{typeof(T).Name}] ";
+            var query = $"select * from {GetTableName()} ";
 
             if (!string.IsNullOrWhiteSpace(where))
                 query += where;
@@ -106,8 +101,7 @@ namespace CopySurveyMeta.DataAccess
 
         public virtual IEnumerable<T> Query(object entity, string where = null)
         {
-            var query = $"select * from [{prefix}].[{typeof(T).Name}] ";
-            // var a = GetColumnsObject(entity.GetType());
+            var query = $"select * from {GetTableName()} ";
             if (!string.IsNullOrWhiteSpace(where))
                 query += where;
             if (_transaction != null)
@@ -122,7 +116,7 @@ namespace CopySurveyMeta.DataAccess
 
         public virtual T QueryFirst(object entity, string where = null)
         {
-            var query = $"select * from [{prefix}].[{typeof(T).Name}] ";
+            var query = $"select * from {GetTableName()} ";
 
             if (!string.IsNullOrWhiteSpace(where))
                 query += where;
@@ -138,18 +132,79 @@ namespace CopySurveyMeta.DataAccess
 
         private IEnumerable<string> GetColumns()
         {
-            return typeof(T)
+            string primaryKeyName = GetPrimaryKey();
+            var column = typeof(T)
                     .GetProperties()
-                    .Where(e => e.Name != "Id" && !e.PropertyType.GetTypeInfo().IsGenericType)
-                    .Select(e => e.Name);
+                    .Where(e => e.Name.ToUpper() != primaryKeyName && !e.PropertyType.GetTypeInfo().IsGenericType)
+                    .Select(e => e.Name).ToList();
+            return ChangeColumnMapName(column);
+        }
+
+        private string StringBucketSysbolInColumns(IEnumerable<string> columns)
+        {
+            return string.Join(", ", columns.Select(x => $"[{x}]"));
+        }
+
+        private string StringAssignSysbolInColumns(IEnumerable<string> columns)
+        {
+            return string.Join(", ", columns.Select(x => $"@{x}"));
         }
 
         private IEnumerable<string> GetColumnsObject(Type entity)
         {
-            return entity
+            string primaryKeyName = GetPrimaryKey();
+            var column = entity
                     .GetProperties()
-                    .Where(e => e.Name != "Id" && !e.PropertyType.GetTypeInfo().IsGenericType)
-                    .Select(e => e.Name);
+                    .Where(e => e.Name != "ID" && !e.PropertyType.GetTypeInfo().IsGenericType)
+                    .Select(e => e.Name).ToList();
+            return ChangeColumnMapName(column);
+        }
+
+        private string GetTableName()
+        {
+            IEnumerable<CustomAttributeData> table = typeof(T).CustomAttributes;
+            string tableName = typeof(T).Name;
+            if (table.Any(x => x.AttributeType.Name == "TableAttribute"))
+            {
+                tableName = table.SelectMany(x => x.ConstructorArguments.Select(c => c.Value.ToString())).FirstOrDefault();
+            }
+            return $"[{prefix}].[{tableName}]";
+        }
+
+        private string GetPrimaryKey()
+        {
+            string primaryKeyName = "ID";
+            var props = typeof(T).GetProperties();
+            int countProps = props.Length;
+            for (int i = 0; i < countProps; i++)
+            {
+                if (props[i].CustomAttributes.Any(x => x.AttributeType.Name == "KeyAttribute"))
+                {
+                    primaryKeyName = props[i].Name;
+                    i = countProps;
+                }
+            }
+
+            return primaryKeyName.ToUpper();
+        }
+
+        private IEnumerable<string> ChangeColumnMapName(List<string> columnsNames)
+        {
+            var props = typeof(T).GetProperties();
+            int countProps = props.Length;
+            for (int i = 0; i < countProps; i++)
+            {
+                var test = props[i];
+                if (test.CustomAttributes.Any(x => x.AttributeType.Name == "ColumnAttribute"))
+                {
+                    var data = props[i].CustomAttributes.Where(x => x.AttributeType.Name == "ColumnAttribute").FirstOrDefault().ConstructorArguments.FirstOrDefault().Value.ToString();
+                    if (!string.IsNullOrEmpty(data))
+                    {
+                        columnsNames[columnsNames.IndexOf(test.Name)] = data;
+                    }
+                }
+            }
+            return columnsNames;
         }
     }
 }

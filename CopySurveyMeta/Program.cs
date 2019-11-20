@@ -2,8 +2,10 @@
 using CopySurveyMeta.Model;
 using CopySurveyMeta.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 
 namespace CopySurveyMeta
 {
@@ -12,9 +14,8 @@ namespace CopySurveyMeta
         private static void Main(string[] args)
         {
             string publishedName = "q3xh0";
-            DeleteData(publishedName, ApplicationInit.GetAppConfig.ConnectionStringDestination, true);
+            //    DeleteData(publishedName, ApplicationInit.GetAppConfig.ConnectionStringDestination, true);
             InsertData(publishedName);
-            
         }
 
         private static void DeleteData(string PublishedKey, string sqlConfig, bool hasDeleteSurvey = false)

@@ -57,16 +57,14 @@ namespace CopySurveyMeta.DataAccess
             var query = $"delete from {GetTableName()} ";
             if (where != null)
             {
-                query += query + where;
-            }
-            if (_transaction != null)
-            {
-                _connect.Execute(query, entity, _transaction);
+                query +=  where;
             }
             else
             {
-                _connect.Execute(query, entity);
+                throw new Exception("delete must where conditions");
             }
+
+            _connect.Execute(query, entity, _transaction);
         }
 
         public virtual void Update(T entity)

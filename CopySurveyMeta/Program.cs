@@ -14,11 +14,11 @@ namespace CopySurveyMeta
         private static void Main(string[] args)
         {
             string publishedName = "q3xh0";
-            //    DeleteData(publishedName, ApplicationInit.GetAppConfig.ConnectionStringDestination, true);
-            InsertData(publishedName);
+             // DeleteData(publishedName, ApplicationInit.GetAppConfig.ConnectionStringDestination, true);
+             InsertData(publishedName);
         }
 
-        private static void DeleteData(string PublishedKey, string sqlConfig, bool hasDeleteSurvey = false)
+        private static void DeleteData(string PublishedKey, string sqlConfig, bool hasDeleteSurvey)
         {
             DbConnect db = null;
             IDbTransaction dbTransaction = null;
@@ -40,15 +40,18 @@ namespace CopySurveyMeta
                 new RepositoryBase<SurveyMetaLanguage>(dbConnection, dbTransaction).Delete(new { SurveyMetaID = surveyMetaIDs }, $"where SurveyMetaID in @SurveyMetaID");
                 // delete meta variable
                 new RepositoryBase<SurveyMetaURLVariable>(dbConnection, dbTransaction).Delete(new { SurveyMetaID = surveyMetaIDs }, $"where SurveyMetaID in @SurveyMetaID");
-                //delete SurveyMetaContent
-                new RepositoryBase<SurveyMetaContent>(dbConnection, dbTransaction).Delete(new { SurveyMetaID = surveyMetaIDs }, $"where SurveyMetaID in @SurveyMetaID");
-                //delete SurveyMetaElementContent
-                new RepositoryBase<SurveyMetaElementContent>(dbConnection, dbTransaction).Delete(new { SurveyMetaID = surveyMetaIDs }, $"where SurveyMetaID in @SurveyMetaID");
                 //delete SurveyMetaElementSubContent
                 new RepositoryBase<SurveyMetaElementSubContent>(dbConnection, dbTransaction).Delete(new { SurveyMetaID = surveyMetaIDs }, $"where SurveyMetaID in @SurveyMetaID");
+                //delete SurveyMetaElementContent
+                new RepositoryBase<SurveyMetaElementContent>(dbConnection, dbTransaction).Delete(new { SurveyMetaID = surveyMetaIDs }, $"where SurveyMetaID in @SurveyMetaID");
+                //delete SurveyMetaContent
+                new RepositoryBase<SurveyMetaContent>(dbConnection, dbTransaction).Delete(new { SurveyMetaID = surveyMetaIDs }, $"where SurveyMetaID in @SurveyMetaID");
+               
+                //delete SurveyMetaElement
                 new RepositoryBase<SurveyMetaElement>(dbConnection, dbTransaction).Delete(new { SurveyMetaID = surveyMetaIDs }, $"where SurveyMetaID in @SurveyMetaID");
                 //delete SurveyPublished
                 new RepositoryBase<SurveyPublished>(dbConnection, dbTransaction).Delete(new { PublishedKey = PublishedKey }, $"where PublishedKey = @PublishedKey");
+                //delete SurveyMeta
                 new RepositoryBase<SurveyMeta>(dbConnection, dbTransaction).Delete(new { ID = surveyMetaIDs }, $"where ID in @ID");
                 if (hasDeleteSurvey)
                 {
